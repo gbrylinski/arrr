@@ -1,0 +1,29 @@
+- name: Create data directory
+  file:
+    path: "{{ ubuntu_mongodb.data_dir }}"
+    state: directory
+    mode: 0750
+    owner: mongodb
+    group: mongodb
+
+- name: Create configuration file
+  template:
+    src: etc/mongod.conf.j2
+    dest: /etc/mongod.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart ubuntu_mongodb
+
+- name: Allow connections to server only from trusted IPs
+  ufw:
+    rule: allow
+    from_ip: "{{ item }}"
+    to_ip: "{{ ubuntu_mongodb.bind_address }}"
+    to_port: "{{ ubuntu_mongodb.bind_port }}"
+    proto: tcp
+  with_items: "{{ ['127.0.0.1'] | union(ubuntu_mongodb.allowed_ips) }}"
+  when: ubuntu_mongodb.allowed_ips is defined
+  notify:
+    - restart ubuntu_mongodb

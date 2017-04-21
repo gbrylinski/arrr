@@ -1,0 +1,8 @@
+- name: Allow connections to SSH service
+  ufw: rule=allow port=22
+
+- name: Allow traffic from localhost
+  ufw: rule=allow from_ip=127.0.0.1
+
+- name: Enable firewall with DENY policy
+  ufw: state=enabled policy=deny

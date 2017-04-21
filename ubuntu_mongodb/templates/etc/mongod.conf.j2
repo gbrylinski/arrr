@@ -1,0 +1,11 @@
+systemLog:
+  destination: file
+  path: {{ ubuntu_mongodb.log_dir }}/mongodb.log
+  logAppend: true
+storage:
+  dbPath: {{ ubuntu_mongodb.data_dir }}
+  engine: wiredTiger
+  directoryPerDB: true
+net:
+  bindIp: {{ ubuntu_mongodb.bind_address }}
+  port: {{ ubuntu_mongodb.bind_port }}

@@ -1,0 +1,19 @@
+- name: Add Brightbox PPA
+  apt_repository: repo="ppa:brightbox/ruby-ng"
+
+- name: Install ruby 2.3
+  apt: name={{ item }} state=latest
+  with_items:
+    - ruby2.3
+    - ruby2.3-dev
+
+- name: Install ruby 2.4
+  apt: name={{ item }} state=latest
+  with_items:
+    - ruby2.4
+    - ruby2.4-dev
+
+- name: Install ruby-switch utility
+  apt: name={{ item }} state=latest
+  with_items:
+    - ruby-switch

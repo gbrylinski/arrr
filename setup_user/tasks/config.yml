@@ -1,0 +1,16 @@
+- name: Create a user account
+  user:
+    name: "{{ setup_user.name }}"
+    shell: /bin/bash
+    state: present
+
+- name: Lock password
+  command: "passwd -l {{ setup_user.name }}"
+  changed_when: false
+
+- name: Add allowed SSH keys
+  authorized_key:
+    user: "{{ setup_user.name }}"
+    key: "{{ item }}"
+  with_items: "{{ setup_user.authorized_keys }}"
+  when: "setup_user.authorized_keys is defined"

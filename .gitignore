@@ -1,0 +1,4 @@
+*.key
+*.bak
+WIP/*
+.DS_Store

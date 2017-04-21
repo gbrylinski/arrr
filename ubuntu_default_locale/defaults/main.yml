@@ -1,0 +1,3 @@
+system_default_locale:
+  language: "en_US.UTF-8"
+  lang_package: "en"

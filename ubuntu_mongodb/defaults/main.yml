@@ -1,0 +1,6 @@
+ubuntu_mongodb:
+  version: 3.4
+  data_dir: /var/lib/mongodb/data
+  log_dir: /var/log/mongodb
+  bind_address: 127.0.0.1
+  bind_port: 27017

@@ -1,0 +1,7 @@
+- name: Install {{ system_default_locale.lang_package }} language pack package
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - "language-pack-{{ system_default_locale.lang_package }}"
+    - "language-pack-{{ system_default_locale.lang_package }}-base"

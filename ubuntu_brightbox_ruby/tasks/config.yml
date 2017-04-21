@@ -1,0 +1,32 @@
+- name: Get current ruby version
+  shell: "ruby-switch --check|grep -i 'currently using'|awk -F' ' '{print $3}'"
+  register: current_ruby_version
+  changed_when: false
+
+- name: Setup ruby default interpreter
+  command: ruby-switch --set {{ ubuntu_brightbox_ruby.default_version }}
+  when: "current_ruby_version.stdout != '{{ ubuntu_brightbox_ruby.default_version }}'"
+
+- copy:
+    src: "etc/profile.d/Z99-ruby-gems-env.sh"
+    dest: "/etc/profile.d/Z99-ruby-gems-env.sh"
+    mode: "0755"
+    owner: root
+    group: root
+
+- name: "Add env setup script to session scripts"
+  lineinfile:
+    dest: "/etc/bash.bashrc"
+    insertbefore: "If not running interactively"
+    regexp: "^source.*gems-env.sh"
+    line: "source /etc/profile.d/Z99-ruby-gems-env.sh"
+
+- name: Install bundler gem for specified users
+  become: true
+  become_user: "{{ item }}"
+  become_method: sudo
+  become_flags: '-i'
+  shell: |
+    gem install bundler --no-ri --no-rdoc
+  with_items: "{{ ubuntu_brightbox_ruby.bundler_users | list}}"
+  when: ubuntu_brightbox_ruby.bundler_users is defined

@@ -1,0 +1,7 @@
+- name: Install common utilities
+  apt: name={{item}} state=latest
+  with_items:
+    - apt-transport-https
+    - curl
+    - gawk
+    - tmux

@@ -1,0 +1,8 @@
+- name: Install common development tools
+  apt: name={{item}} state=latest
+  with_items:
+    - autoconf
+    - automake
+    - bison
+    - build-essential
+    - git-core

@@ -1,0 +1,4 @@
+- name: Install fail2ban packages
+  apt: name={{item}} state=present
+  with_items:
+    - fail2ban

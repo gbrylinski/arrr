@@ -1,0 +1,5 @@
+- include: setup.yml
+  tags: ['system_ufw', 'ufw', 'setup']
+
+- include: 'config.yml'
+  tags: ['system_ufw', 'ufw', 'config']

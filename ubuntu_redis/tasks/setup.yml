@@ -1,0 +1,6 @@
+- name: Install Redis server packages
+  apt: name={{ item }} state=present
+  with_items:
+    - redis-server
+    - redis-tools
+  notify: restart redis-server

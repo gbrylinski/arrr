@@ -1,0 +1,21 @@
+- lineinfile:
+    dest: /etc/redis/redis.conf
+    regexp: '^bind'
+    line: "bind {{ ubuntu_redis.bind_address }}"
+  notify: restart redis-server
+
+- lineinfile:
+    dest: /etc/redis/redis.conf
+    regexp: '^port'
+    line: "port {{ ubuntu_redis.bind_port }}"
+  notify: restart redis-server
+
+- ufw:
+    rule: allow
+    from_ip: "{{ item }}"
+    to_ip: "{{ ubuntu_redis.bind_address }}"
+    to_port: "{{ ubuntu_redis.bind_port }}"
+    proto: tcp
+  with_items: "{{ ubuntu_redis.allowed_ips }}"
+  when: ubuntu_redis.allowed_ips is defined
+  notify: restart redis-server
