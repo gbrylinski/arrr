@@ -21,3 +21,7 @@ The base principles I tried to keep to are as follows:
 # More roles?
 
 This is a work-in-progress so more roles come soon. Stay tuned (-;
+
+# How to use?
+
+There's a demo playbook using the `arrr` roles called [arrr_demo](https://github.com/gbrylinski/arrr_demo). It's based on Vagrant so it's pretty easy to run and experiment with.
